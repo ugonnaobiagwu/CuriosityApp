@@ -14,6 +14,11 @@ struct ContentView: View {
                 .imageScale(.large)
                 .foregroundStyle(.tint)
             Text("Hello, world!")
+            Button(action: { Task { await QuestionModel.addQuestion(question: "HRU")}})
+            {
+               Text("Send Question")
+            }
+                
         }
         .padding()
     }
