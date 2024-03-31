@@ -7,23 +7,77 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct EnterQuestionView: View {
+    var body: some View {
+            VStack {
+                Spacer()
+                QuestionMark()
+                LandingText()
+                SendQuestion()
+                    .padding(.top, 50)
+                Spacer()
+                BackHomeButton()
+                Spacer()
+            }
+            .padding()
+    }
+}
+
+struct SendQuestion: View {
+    @State private var userQuestion: String = ""
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-            Button(action: { Task { await QuestionModel.addQuestion(question: "HRU")}})
-            {
-               Text("Send Question")
+            TextField("Enter Question", text: $userQuestion)
+                .padding([.bottom, .trailing], 20)
+            
+            Button("Send Question") {
+                Task { await QuestionModel.addQuestion(question: userQuestion)}
             }
-                
+                .buttonStyle(.bordered)
+                .tint(QuestionViewModel.isSendQuestionTextEmpty(text: userQuestion))
+                .buttonBorderShape(.roundedRectangle(radius: 20.0))
+                .disabled(userQuestion.isEmpty)
+                .font(.headline)
         }
-        .padding()
+    }
+}
+
+struct BackHomeButton: View {
+    var body: some View {
+        VStack {
+            
+            Button("Return to Question Deck") {
+               
+            }
+                .buttonStyle(.bordered)
+                .tint(.yellow)
+                .buttonBorderShape(.roundedRectangle(radius: 20.0))
+                .font(.headline)
+        }
+    }
+}
+
+struct QuestionMark: View {
+    var body: some View {
+        VStack {
+            Image(systemName: "questionmark.circle")
+                .font(.system(size: 50)) // Change font size to 50
+                .fontWeight(.semibold)
+                .padding([.bottom, .trailing], 2)
+        }
+    }
+}
+
+struct LandingText: View {
+    var body: some View {
+        VStack {
+            Text("Enter Your Question")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+        }
     }
 }
 
 #Preview {
-    ContentView()
+    EnterQuestionView()
 }
