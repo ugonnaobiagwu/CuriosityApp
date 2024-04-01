@@ -15,6 +15,7 @@ struct EnterQuestionView: View {
                 LandingText()
                 SendQuestion()
                     .padding(.top, 50)
+                
                 Spacer()
                 BackHomeButton()
                 Spacer()
@@ -59,9 +60,17 @@ struct BackHomeButton: View {
 
 struct QuestionMark: View {
     var body: some View {
-        VStack {
+        HStack {
+            Image(systemName: "questionmark.circle")
+                .font(.system(size: 35)) // Change font size to 50
+                .fontWeight(.semibold)
+                .padding([.bottom, .trailing], 2)
             Image(systemName: "questionmark.circle")
                 .font(.system(size: 50)) // Change font size to 50
+                .fontWeight(.regular)
+                .padding([.bottom, .trailing], 2)
+            Image(systemName: "questionmark.circle")
+                .font(.system(size: 35)) // Change font size to 50
                 .fontWeight(.semibold)
                 .padding([.bottom, .trailing], 2)
         }
