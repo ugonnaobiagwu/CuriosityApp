@@ -12,12 +12,12 @@ struct EnterQuestionView: View {
             VStack {
                 Spacer()
                 QuestionMark()
-                LandingText()
+                EnterQuestionLandingText()
                 SendQuestion()
                     .padding(.top, 50)
                 
                 Spacer()
-                BackHomeButton()
+//                BackHomeButton()
                 Spacer()
             }
             .padding()
@@ -26,6 +26,7 @@ struct EnterQuestionView: View {
 
 struct SendQuestion: View {
     @State private var userQuestion: String = ""
+    @State private var showAlert: Bool = false
     var body: some View {
         VStack {
             TextField("Enter Question", text: $userQuestion)
@@ -33,12 +34,19 @@ struct SendQuestion: View {
             
             Button("Send Question") {
                 Task { await QuestionModel.addQuestion(question: userQuestion)}
+                userQuestion = ""
+                showAlert = true
+                //Clear it so the user knows the question has been sent
             }
                 .buttonStyle(.bordered)
                 .tint(QuestionViewModel.isSendQuestionTextEmpty(text: userQuestion))
                 .buttonBorderShape(.roundedRectangle(radius: 20.0))
                 .disabled(userQuestion.isEmpty)
                 .font(.headline)
+                .alert("Question Sent!", isPresented: $showAlert) {
+                            Button("OK", role: .cancel) { }
+                        }
+            
         }
     }
 }
@@ -47,7 +55,7 @@ struct BackHomeButton: View {
     var body: some View {
         VStack {
             
-            Button("Return to Question Deck") {
+            Button("Return Home") {
                
             }
                 .buttonStyle(.bordered)
@@ -77,7 +85,7 @@ struct QuestionMark: View {
     }
 }
 
-struct LandingText: View {
+struct EnterQuestionLandingText: View {
     var body: some View {
         VStack {
             Text("Enter Your Question")

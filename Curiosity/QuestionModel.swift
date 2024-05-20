@@ -28,5 +28,21 @@ class QuestionModel {
           print("Error adding document: \(error)")
         }
     }
+    
+    static func getAQuestion() async -> String {
+        var question : String = ""
+        do {
+            var questions = try await db.collection(QUESTIONS_COLLECTION).getDocuments()
+            // Grab a random question IDX
+            var idx = Int.random(in: 0..<questions.count)
+            var questionData = questions.documents[idx].data()
+            question = questionData.removeValue(forKey: "Question") as! String
+
+            print("Question Retrieved: \(question)")
+        } catch {
+          print("Error adding document: \(error)")
+        }
+        return question
+    }
 }
 
