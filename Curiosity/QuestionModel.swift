@@ -14,6 +14,8 @@ class QuestionModel {
     private static let QUESTIONS_COLLECTION = "Questions"
     private static let QUESTIONS_DOCUMENT = "QuestionDoc"
     private static let QUESTION_DOCUMENT_QUESTION_LIST = "QuestionList"
+    private static let QUESTION_DOCUMENT_DATA = "Question"
+
 
 
     
@@ -21,7 +23,7 @@ class QuestionModel {
     static func addQuestion(question: String) async {
         do {
             let ref = try await db.collection(QUESTIONS_COLLECTION).addDocument(
-                data: ["Question" : question]
+                data: [ QUESTION_DOCUMENT_DATA : question]
             )
           print("Document added with ID: \(ref.documentID)")
         } catch {
@@ -36,7 +38,7 @@ class QuestionModel {
             // Grab a random question IDX
             var idx = Int.random(in: 0..<questions.count)
             var questionData = questions.documents[idx].data()
-            question = questionData.removeValue(forKey: "Question") as! String
+            question = questionData.removeValue(forKey: QUESTION_DOCUMENT_DATA) as! String
 
             print("Question Retrieved: \(question)")
         } catch {
