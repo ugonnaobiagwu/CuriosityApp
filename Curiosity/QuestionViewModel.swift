@@ -16,4 +16,5 @@ class QuestionViewModel {
             return Color.purple
         }
     }
+    
 }

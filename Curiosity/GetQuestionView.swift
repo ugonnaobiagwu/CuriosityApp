@@ -18,6 +18,7 @@ struct GetQuestionView: View {
 
 struct GetQuestion: View {
     @State private var userQuestion: String = "Press the button to get a question"
+    @State private var noMoreQuestions: Bool = false
     var body: some View {
         VStack {
             Spacer()
@@ -29,11 +30,15 @@ struct GetQuestion: View {
             Spacer()
             Button("Get Question") {
                 Task { await userQuestion = QuestionModel.getAQuestion()}
+                noMoreQuestions = ((!userQuestion.elementsEqual("")) && (!userQuestion.elementsEqual("Press the button to get a question")))
             }
                 .buttonStyle(.bordered)
                 .tint(QuestionViewModel.isSendQuestionTextEmpty(text: userQuestion))
                 .buttonBorderShape(.roundedRectangle(radius: 20.0))
                 .font(.headline)
+                .alert("All Questions Cycled Through", isPresented: $noMoreQuestions) {  Button("OK", role: .cancel) { }
+                }
+            
             Spacer()
             
         }

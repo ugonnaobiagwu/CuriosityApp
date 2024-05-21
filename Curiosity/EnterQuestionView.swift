@@ -34,7 +34,7 @@ struct SendQuestion: View {
             
             Button("Send Question") {
                 Task { await QuestionModel.addQuestion(question: userQuestion)}
-                userQuestion = ""
+//                userQuestion = ""
                 showAlert = true
                 //Clear it so the user knows the question has been sent
             }
